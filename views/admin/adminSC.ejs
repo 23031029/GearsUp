@@ -1,0 +1,140 @@
+<!-- /*
+ I declare that this code was written by me. 
+ I will not copy or allow others to copy my code. 
+ I understand that copying code is considered as plagiarism.
+ 
+ Student Name: Toh Ser Jia
+ Student ID: 23031029
+ Class: C372-2D-E63C-A
+ Date created: 10/02/2025
+ */ -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Size and Color</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+      body {
+        background-color: #f8f7f6;
+      }
+
+      main {
+        padding: 5%;
+        padding-left: 10%;
+        padding-right: 10%;
+      }
+
+      table {
+        border: 2px solid #986c4a;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      table th {
+        background-color: #986c4a !important;
+        color: #dcc9bb !important;
+      }
+
+      table td {
+        background-color: #dcc9bb !important;
+        color: #986c4a !important;
+      }
+
+      .add {
+        color: #5c4838;
+      }
+
+      .add:hover {
+        color: #ab9786;
+      }
+
+      .form-input {
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <%- include('../partials/nav.ejs') %>
+    </header>
+
+    <main>
+      <div class="container text-center">
+        <div class="row">
+          <!-- Colors Section -->
+          <div class="col">
+            <h3>
+              Add Color
+            </h3>
+            <!-- Color Input Form -->
+            <form action="/addColor" method="post">
+              <input type="text" name="colorName" class="form-control form-input" placeholder="Type the color" required>
+              <button type="submit" class="btn btn-outline-secondary">Add Color</button>
+            </form>
+            <table class="table text-center">
+              <thead>
+                <tr>
+                  <th scope="col">Color ID</th>
+                  <th scope="col">Color Name</th>
+                  <th scope="col">Delete Color</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% for (let i = 0; i < color.length; i++) { %>
+                  <tr class="users">
+                    <td><%= color[i].colorID %></td>
+                    <td><%= color[i].colorName %></td>
+                    <td>
+                        <a  href="/deleteColor/<%= color[i].colorID %>" onclick="return confirm('Are you sure you want to delete <%=color[i].colorName%>?')">
+                          <button type="button" class="btn btn-outline-danger">Delete Color</button>
+                        </a>
+                      </td>
+                  </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Sizes Section -->
+          <div class="col">
+            <h3>
+              Add Size
+            </h3>
+            <!-- Size Input Form -->
+            <form action="/addSize" method="post">
+              <input type="text" name="size" class="form-control form-input" placeholder="Type the size" required>
+              <button type="submit" class="btn btn-outline-secondary">Add Size</button>
+            </form>
+            <table class="table text-center">
+              <thead>
+                <tr>
+                  <th scope="col">Size ID</th>
+                  <th scope="col">Size</th>
+                  <th scope="col">Delete Size</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% for (let i = 0; i < size.length; i++) { %>
+                  <tr class="users">
+                    <td><%= size[i].sizeID %></td>
+                    <td><%= size[i].size %></td>
+                    <td>
+                        <a  href="/deleteSize/<%= size[i].sizeID %>" onclick="return confirm('Are you sure you want to delete <%=size[i].size%>?')">
+                          <button type="button" class="btn btn-outline-danger">Delete Size</button>
+                        </a>
+                      </td>
+                  </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>

@@ -1,0 +1,93 @@
+<!-- /*
+ I declare that this code was written by me. 
+ I will not copy or allow others to copy my code. 
+ I understand that copying code is considered as plagiarism.
+ 
+ Student Name: Toh Ser Jia
+ Student ID: 23031029
+ Class: C372-2D-E63C-A
+ Date created: 10/02/2025
+ */ -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Categories</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+      .card {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        border: 1px solid #00000020;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+      }
+
+      .card-img-container {
+        position: relative;
+        height: 300px;
+      }
+
+      .card-img-top {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .card-title-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #00000060;
+        color: white;
+        font-size: 35px;
+        font-weight: bold;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <%- include('../partials/nav.ejs') %>
+    </header>
+
+    <main>
+      <!-- Categories Section -->
+      <div class="container mt-4">
+        <div class="row g-4">
+
+          <% for (let i = 0; i < category.length; i++) { %>
+            <div class="col-12 col-md-4 mb-4">
+              <a href="/product/<%= category[i].categoryID %>">
+                <div class="card">
+                  <div class="card-img-container position-relative">
+                    <img src="/images/<%= category[i].image %>" class="card-img-top" alt="<%= category[i].name %>">
+                    <div class="card-title-overlay position-absolute bottom-0 start-0 w-100 p-2 text-white bg-dark bg-opacity-50">
+                      <%= category[i].name %>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          <% } %>
+          
+        </div>
+      </div>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>

@@ -1,0 +1,164 @@
+<!-- /*
+ I declare that this code was written by me. 
+ I will not copy or allow others to copy my code. 
+ I understand that copying code is considered as plagiarism.
+ 
+ Student Name: Toh Ser Jia
+ Student ID: 23031029
+ Class: C372-2D-E63C-A
+ Date created: 10/02/2025
+ */ -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Product Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+      .col {
+        margin-top: 5%;
+      }
+      #column1 {
+        text-align: left;
+      }
+      .btn-primary {
+        background-color: #986c4a !important;
+        border: none !important;
+      }
+      .product-image {
+        max-width: 100%;
+        height: auto;
+      }
+        .fa-star {
+          color: #ccc;
+          font-size: 1.5em;
+        }
+
+        .fa-star.checked {
+          color: #f1c40f;
+        }
+
+        img {
+          border-radius: 5px;
+        }
+
+        label{
+          margin-top: 10%;
+        }
+
+        .btn-primary{
+          margin-top: 45%;
+        }
+
+    </style>
+  </head>
+  <body>
+    <header>
+      <%- include('../partials/nav.ejs') %>
+    </header>
+
+    <main>
+      <div class="container text-center">
+        <div class="row">
+          <% if (product) { %>
+            <!-- Product Image and Details -->
+            <div class="col-md-6" id="column1">
+              <img src="/images/<%= product.image %>" class="product-image" alt="<%= product.name %>" width="40%">
+              <h3 class="mt-3">$<%= product.price %></h3>
+              <h3><b><%= product.name %></b></h3>
+              <h4>Description:</h4>
+              <p><%= product.description %></p>
+              <h5>Brand: <%= product.brandName %></h5>
+            </div>
+
+            <!-- Product Options and Add to Cart -->
+            <div class="col-md-6" id="column2">
+              <form action="/addtocart" method="POST">
+                <!-- Hidden input for product ID -->
+                <input type="hidden" name="productID" value="<%= product.productID %>">
+                <label for="variant" style="text-align: left !important; display: block;"><b>Product Variant:</b></label>
+                <select name="variant" id="variant" class="form-select">
+                  <% for (let v=0; v<variant.length; v++){ %>
+                    <% if(variant[v].size != null && variant[v].colorName != null){ %>
+                        <option value="<%= variant[v].productVariantID %>"><%= variant[v].size %> - <%= variant[v].colorName %></option>
+                    <%} else if(variant[v].size != null && variant[v].colorName == null){ %> 
+                        <option value="<%= variant[v].productVariantID %>"><%= variant[v].size %></option>
+                    <%} else if(variant[v].size == null && variant[v].colorName != null){ %>
+                        <option value="<%= variant[v].productVariantID %>"><%= variant[v].colorName %></option>
+                    <%} else{ %>  
+                        <option value="<%= variant[v].productVariantID %>">Default</option>
+                    <%}%>
+                <%}%>
+                
+                </select>
+
+                <!-- Quantity -->
+                <div class="mb-3">
+                  <label for="variant" style="text-align: left !important; display: block;"><b>Quantity:</b></label>
+                  <input 
+                    type="number" 
+                    name="quantity" 
+                    id="quantity" 
+                    class="form-control" 
+                    min="1" 
+                    value="1" 
+                    required>
+                </div>
+
+                <!-- Add to Cart Button -->
+                <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
+              </form>
+            </div>
+          <% } else { %>
+            <div class="col">
+              <h3>Product Not Found</h3>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container text-center mt-5">
+        <h3><b>Customer Feedback</b></h3>
+        <% if (feedback.length === 0) { %>
+          <p>No reviews yet.</p>
+        <% } else { %>
+          <% for (let i = 0; i < feedback.length; i++) { %>
+            <div class="row mt-4">
+              <div class="col-md-6 offset-md-3">
+                <!-- Feedback User and Date -->
+                <h5><%= feedback[i].username %></h5>
+                <p class="text-muted"><%= feedback[i].reviewdate %></p>
+      
+                <!-- Rating Display -->
+                <div>
+                  <% for (let j = 0; j < 5; j++) { %>
+                    <span class="fa fa-star <% if (j < feedback[i].rating) { %>checked<% } %>"></span>
+                  <% } %>
+                  <span><%= feedback[i].rating %>/5</span>
+                </div>
+      
+                <!-- Feedback Image (if available) -->
+                <% if (feedback[i].image != null) { %>
+                  <div class="my-2">
+                    <img src="/images/<%= feedback[i].image %>" alt="Feedback Image" class="img-fluid" width="40%">
+                  </div>
+                <% } %>
+      
+                <!-- Feedback Description -->
+                <p class="mt-3"><%= feedback[i].description %></p>
+              </div>
+            </div>
+          <% } %>
+        <% } %>
+      </div>
+    </footer>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>
